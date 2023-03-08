@@ -1,0 +1,16 @@
+PODS:
+  - SwiftUtils (1.0.0)
+
+DEPENDENCIES:
+  - SwiftUtils (from `../msecd`)
+
+EXTERNAL SOURCES:
+  SwiftUtils:
+    :path: "../msecd"
+
+SPEC CHECKSUMS:
+  SwiftUtils: 765584673f32ffa4271d1066ba64cbb1b233c913
+
+PODFILE CHECKSUM: 381519f0897ed0f1dd51a148a75c38c16dca21f1
+
+COCOAPODS: 1.11.3
