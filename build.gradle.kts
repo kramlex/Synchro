@@ -1,28 +1,17 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.7.21"
-    application
+    alias(libs.plugins.multiplatform).apply(false)
+    alias(libs.plugins.compose).apply(false)
+    alias(libs.plugins.cocoapods).apply(false)
+    alias(libs.plugins.libres).apply(false)
+    alias(libs.plugins.buildConfig).apply(false)
+    alias(libs.plugins.kotlinx.serialization).apply(false)
 }
 
-group = "ru.nsu.synchro"
-version = "0.0.1"
-
-
-dependencies {
-    implementation(libs.coroutines)
-
-    testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-application {
-    mainClass.set("MainKt")
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    dependencies.classpath(libs.antlrRuntimeGradle)
 }

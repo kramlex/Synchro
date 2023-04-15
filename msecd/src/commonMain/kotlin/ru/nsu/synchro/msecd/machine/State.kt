@@ -4,6 +4,7 @@ import ru.nsu.synchro.msecd.machine.shared.SharedMemory
 import ru.nsu.synchro.msecd.sexp.SExp
 
 class State(
+    val name: String,
     var sharedMemory: SharedMemory,
     var stack: SExp,
     var env: SExp,

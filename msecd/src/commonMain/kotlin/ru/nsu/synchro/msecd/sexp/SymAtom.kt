@@ -17,5 +17,9 @@ data class SymAtom(
         val LAMBDA: SExp = SymAtom("lambda")
         val T: SExp = SymAtom("T")
         val F: SExp = SymAtom("F")
+
+        val reserved: List<SExp> = listOf(
+            NIL, LAMBDA, T, F
+        )
     }
 }

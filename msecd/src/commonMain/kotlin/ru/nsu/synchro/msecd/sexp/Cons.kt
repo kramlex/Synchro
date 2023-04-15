@@ -30,6 +30,14 @@ data class Cons(
 
     constructor(first: Int, second: Int) : this(IntAtom(first), IntAtom(second))
 
+    constructor(
+        int: Int
+    ) : this(IntAtom(int), SymAtom.NIL)
+
+    constructor(
+        string: String
+    ) : this(SymAtom(string), SymAtom.NIL)
+
     override val car: SExp get() = carSExp
     override val cdr: SExp get() = cdrSExp
     override val caar: SExp get() = this.car.car
@@ -49,6 +57,11 @@ data class Cons(
 
     override fun rplaca(carSExp: SExp): SExp {
         this.carSExp = carSExp
+        return this
+    }
+
+    override fun rplacd(carSExp: SExp): SExp {
+        this.cdrSExp = cdrSExp
         return this
     }
 }

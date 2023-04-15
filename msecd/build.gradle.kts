@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-
+    commonMainImplementation(libs.coroutines)
     commonTestImplementation(libs.kotlinJunit)
 }
 

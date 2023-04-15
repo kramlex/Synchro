@@ -1,6 +1,6 @@
 import org.junit.Test
 import ru.nsu.synchro.msecd.Interpreter
-import ru.nsu.synchro.msecd.LispParser
+import ru.nsu.synchro.msecd.ExpressionParser
 import ru.nsu.synchro.msecd.sexp.Cons
 import ru.nsu.synchro.msecd.sexp.SExp
 import java.io.InputStream
@@ -16,19 +16,17 @@ class LTest {
     private fun parseFromFile(inFileName: String?): SExp {
         val inputStream: InputStream = javaClass.classLoader.getResourceAsStream(inFileName)!!
         val inputStreamString: String = Scanner(inputStream, "UTF-8").useDelimiter(/* pattern = */ "\\A").next()
-        return LispParser.parse(inputStreamString)
+        return ExpressionParser.parse(inputStreamString)
     }
 
     private fun parse(input: String): SExp {
-        return LispParser.parse(input)
+        return ExpressionParser.parse(input)
     }
 
     @Test
     fun bootstrapTheCompilerShouldWork() {
         val compilerSourceCode: SExp = parseFromFile("compile.lkl")
         val bootstrappedCompiler: SExp = LispCompiler.compile(compilerSourceCode)
-        println(compilerSourceCode)
-        println(bootstrappedCompiler)
         val verifiedCompiler: SExp = Interpreter.exec(bootstrappedCompiler, Cons(compilerSourceCode, NIL))
         assertEquals(verifiedCompiler.toString(), bootstrappedCompiler.toString())
     }
@@ -39,7 +37,6 @@ class LTest {
      */
     private fun bootsTrapCompiler(): SExp {
         val compilerSourceCode: SExp = parseFromFile("compile.lkl")
-        println(compilerSourceCode)
         return LispCompiler.compile(compilerSourceCode)
     }
 

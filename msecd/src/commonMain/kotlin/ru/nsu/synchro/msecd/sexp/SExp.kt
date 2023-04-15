@@ -58,4 +58,7 @@ sealed interface SExp {
 
     @Throws(SExpException::class)
     fun rplaca(carSExp: SExp): SExp = throw SExpException("rplaca() -- Cons expected.")
+
+    @Throws(SExpException::class)
+    fun rplacd(carSExp: SExp): SExp = throw SExpException("rplacd() -- Cons expected.")
 }
