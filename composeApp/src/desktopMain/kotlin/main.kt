@@ -3,7 +3,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import ru.nsu.synchro.App
+import ru.nsu.synchro.app.App
 
 fun main() = application {
 
