@@ -1,16 +1,18 @@
 @file:Suppress("ClassName", "NonAsciiCharacters")
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import ru.nsu.synchro.app.machine.ast.EnvNode
 import ru.nsu.synchro.app.machine.ast.ForeignFunctionNode
 import ru.nsu.synchro.app.machine.dsl.program
+import ru.nsu.synchro.app.machine.runtime.ExecutableProgram
 import ru.nsu.synchro.app.machine.runtime.ProgramEnvironment
-import ru.nsu.synchro.app.machine.runtime.executeProgram
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
@@ -86,10 +88,15 @@ class MachineTest {
 
     @Test
     fun machineTest() = runBlocking {
-        executeProgram(
-            `Среда философа`,
-            program,
-            debug = true
-        )
+
+        val executableProgram = ExecutableProgram(`Среда философа`, program, debug = true)
+        println(executableProgram.runningThreads)
+
+        launch {
+            delay(2000)
+            executableProgram.runningThreads["Философ1"]?.update { true }
+        }
+
+        executableProgram.executeProgram()
     }
 }

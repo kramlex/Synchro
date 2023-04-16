@@ -31,17 +31,23 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                // compose
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(libs.napier)
                 implementation(libs.libres)
+
+                // libs
                 implementation(libs.voyager.navigator)
                 implementation(libs.composeImageLoader)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.multiplatformSettings)
+
+                // projects
                 implementation(projects.multi)
+                implementation(projects.utils)
             }
         }
 

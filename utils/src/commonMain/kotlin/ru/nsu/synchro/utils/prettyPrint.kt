@@ -1,4 +1,4 @@
-package ru.nsu.synchro.multi.utils
+package ru.nsu.synchro.utils
 
 fun Any.prettyPrint(): String {
 

@@ -1,13 +1,16 @@
 
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
 import ru.nsu.synchro.app.machine.ast.EnvNode
 import ru.nsu.synchro.app.machine.ast.ForeignFunctionNode
 import ru.nsu.synchro.app.machine.dsl.program
+import ru.nsu.synchro.app.machine.runtime.ExecutableProgram
 import ru.nsu.synchro.app.machine.runtime.ProgramEnvironment
-import ru.nsu.synchro.app.machine.runtime.executeProgram
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
@@ -160,10 +163,18 @@ class SecondMachineTest {
 
     @Test
     fun twoPhilsTest() = runBlocking {
-        executeProgram(
-            `Среда философов`,
-            program,
-            debug = true
-        )
+        val executableProgram = ExecutableProgram(`Среда философов`, program, debug = true)
+        println(executableProgram.runningThreads)
+
+        coroutineScope {
+            launch {
+                println("start launch")
+                delay(10000)
+                executableProgram.runningThreads["Философ1"]?.update { true }
+                executableProgram.runningThreads["Философ2"]?.update { true }
+            }
+
+            executableProgram.executeProgram()
+        }
     }
 }

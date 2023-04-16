@@ -9,6 +9,7 @@ plugins {
 dependencies {
     antlr("org.antlr:antlr4:4.12.0")
     implementation(libs.coroutines)
+    implementation(projects.utils)
     api(projects.multi)
 
     testImplementation(kotlin("test"))

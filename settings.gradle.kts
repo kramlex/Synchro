@@ -22,6 +22,7 @@ dependencyResolutionManagement {
 includeBuild("build-logic")
 include(":msecd")
 include(":multi")
+include(":utils")
 include(":multi-java")
 include(":SynchroGame")
 include(":composeApp")

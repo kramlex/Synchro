@@ -1,16 +1,21 @@
 PODS:
   - composeApp (1.0.0)
+  - SwiftUtils (1.0.0)
 
 DEPENDENCIES:
   - composeApp (from `../composeApp`)
+  - SwiftUtils (from `../msecd`)
 
 EXTERNAL SOURCES:
   composeApp:
     :path: "../composeApp"
+  SwiftUtils:
+    :path: "../msecd"
 
 SPEC CHECKSUMS:
-  composeApp: 66f76ce03cbee2a84842943cc36b1165646a7f5b
+  composeApp: 58bd6f8f856dcad1272cc36602ad7e4bf7bb4cfd
+  SwiftUtils: 765584673f32ffa4271d1066ba64cbb1b233c913
 
-PODFILE CHECKSUM: 3313a530e4ca4361dd2a9b97cf3c536967731c31
+PODFILE CHECKSUM: 9b0c58c617b23ccb3b028b0c81747258f6f5cb78
 
 COCOAPODS: 1.11.3

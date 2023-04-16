@@ -1,6 +1,7 @@
+
 import org.junit.jupiter.api.Test
 import ru.nsu.synchro.multi.Parser
-import ru.nsu.synchro.multi.utils.prettyPrint
+import ru.nsu.synchro.utils.prettyPrint
 
 class ParserTest {
 

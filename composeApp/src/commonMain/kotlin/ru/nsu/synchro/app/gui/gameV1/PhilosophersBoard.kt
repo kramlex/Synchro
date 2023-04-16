@@ -1,4 +1,4 @@
-package ru.nsu.synchro.app.gui
+package ru.nsu.synchro.app.gui.gameV1
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
