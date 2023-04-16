@@ -174,7 +174,7 @@ class SecondMachineTest {
                 executableProgram.runningThreads["Философ2"]?.update { true }
             }
 
-            executableProgram.executeProgram()
+            executableProgram.startExecution()
         }
     }
 }

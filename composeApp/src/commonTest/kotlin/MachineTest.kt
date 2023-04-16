@@ -97,6 +97,6 @@ class MachineTest {
             executableProgram.runningThreads["Философ1"]?.update { true }
         }
 
-        executableProgram.executeProgram()
+        executableProgram.startExecution()
     }
 }

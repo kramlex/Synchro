@@ -96,7 +96,6 @@ object PhilosophersParallelGameTranslator {
             )
 
             fun findAndAddThread(threadName: String?, symbol: String): String {
-                println(symbol)
                 return all.first { it == symbol}.let { "${threadName.orEmpty()}###$it" }
             }
         }
@@ -123,15 +122,13 @@ object PhilosophersParallelGameTranslator {
         fun ProgramBuilder.translateAction(threadName: String?, action: Action) {
             when (action) {
                 is Action.Pause -> delay(action.durationSec.seconds)
-                is Action.While -> synchronous(action.name) {
-                    whileLoop(
-                        envName = when (val condition = action.condition) {
-                            is Condition.NamedCondition -> condition.name.let { symbol ->
-                                Commands.findAndAddThread(threadName = threadName, symbol = symbol)
-                            }
+                is Action.While -> whileLoop(
+                    envName = when (val condition = action.condition) {
+                        is Condition.NamedCondition -> condition.name.let { symbol ->
+                            Commands.findAndAddThread(threadName = threadName, symbol = symbol)
                         }
-                    ) { translateAction(threadName, action.action) }
-                }
+                    }
+                ) { translateAction(threadName, action.action) }
                 is Action.Command -> when(val command = action.command) {
                     is Command.Queue -> synchronous(action.name) {
                         command.actions.forEach { translateAction(threadName, it) }
