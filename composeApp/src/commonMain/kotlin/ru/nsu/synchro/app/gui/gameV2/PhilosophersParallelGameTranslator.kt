@@ -37,43 +37,43 @@ object PhilosophersParallelGameTranslator {
              * take right fork
              */
             const val TAKE_R_FORK = "ВЗЯТЬ_ПРАВУЮ_ВИЛКУ"
-            fun TAKE_R_FORK(threadName: String?) = "${threadName.orEmpty()}###$TAKE_L_FORK"
+            fun TAKE_R_FORK(threadName: String?) = "${threadName.orEmpty()}###$TAKE_R_FORK"
 
             /**
              * eat
              */
             const val EAT = "ЕСТЬ"
-            fun EAT(threadName: String?) = "${threadName.orEmpty()}###$TAKE_L_FORK"
+            fun EAT(threadName: String?) = "${threadName.orEmpty()}###$EAT"
 
             /**
              * finished eating
              */
             const val FIN_EATING = "ПОЕЛ"
-            fun FIN_EATING(threadName: String?) = "${threadName.orEmpty()}###$TAKE_L_FORK"
+            fun FIN_EATING(threadName: String?) = "${threadName.orEmpty()}###$FIN_EATING"
 
             /**
              * put left fork
              */
             const val PUT_L_FORK = "ПОЛОЖИТЬ_ЛЕВУЮ_ВИЛКУ"
-            fun PUT_L_FORK(threadName: String?) = "${threadName.orEmpty()}###$TAKE_L_FORK"
+            fun PUT_L_FORK(threadName: String?) = "${threadName.orEmpty()}###$PUT_L_FORK"
 
             /**
              * put right fork
              */
             const val PUT_R_FORK = "ПОЛОЖИТЬ_ПРАВУЮ_ВИЛКУ"
-            fun PUT_R_FORK(threadName: String?) = "${threadName.orEmpty()}###$TAKE_L_FORK"
+            fun PUT_R_FORK(threadName: String?) = "${threadName.orEmpty()}###$PUT_R_FORK"
 
             /**
              * backward
              */
             const val BWD = "ШАГ_НАЗАД"
-            fun BWD(threadName: String?) = "${threadName.orEmpty()}###$TAKE_L_FORK"
+            fun BWD(threadName: String?) = "${threadName.orEmpty()}###$BWD"
 
             /**
              * backward free
              */
             const val BWD_FREE = "СЗАДИ_СВОБОДНО"
-            fun BWD_FREE(threadName: String?) = "${threadName.orEmpty()}###$TAKE_L_FORK"
+            fun BWD_FREE(threadName: String?) = "${threadName.orEmpty()}###$BWD_FREE"
 
             /**
              * everyone ate
