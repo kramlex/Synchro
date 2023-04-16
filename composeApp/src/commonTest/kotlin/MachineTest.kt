@@ -1,6 +1,8 @@
+@file:Suppress("ClassName", "NonAsciiCharacters")
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -9,29 +11,29 @@ import ru.nsu.synchro.app.machine.ast.ForeignFunctionNode
 import ru.nsu.synchro.app.machine.dsl.program
 import ru.nsu.synchro.app.machine.runtime.ProgramEnvironment
 import ru.nsu.synchro.app.machine.runtime.executeProgram
-import kotlin.native.concurrent.ThreadLocal
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
-@ThreadLocal
+@Suppress("NonAsciiCharacters", "ClassName")
 object `Среда философа` : ProgramEnvironment {
-    private var currentPosition1 = 0
 
-    private var fork1Taken = MutableStateFlow(false)
+    private val currentPosition1 = MutableStateFlow(0)
+
+    private val fork1Taken = MutableStateFlow(false)
     private val fork1Mutex = Mutex()
-    private var fork2Taken = MutableStateFlow(false)
+    private val fork2Taken = MutableStateFlow(false)
     private val fork2Mutex = Mutex()
 
     override suspend fun provideEnvVariable(node: EnvNode): Any? = when (node.name) {
-        "Впереди свободно 1" -> currentPosition1 < 3
-        "Сзади свободно 1" -> currentPosition1 > 0
+        "Впереди свободно 1" -> currentPosition1.value < 3
+        "Сзади свободно 1" -> currentPosition1.value > 0
         else -> null
     }
 
     override suspend fun callForeignFunction(node: ForeignFunctionNode) {
         when (node.name) {
-            "Шаг вперёд 1" -> currentPosition1++
-            "Шаг назад 1" -> currentPosition1--
+            "Шаг вперёд 1" -> currentPosition1.update { it.inc() }
+            "Шаг назад 1" -> currentPosition1.update { it.dec() }
             "Взять вилку 1" -> fork1Mutex.withLock {
                 fork1Taken.first { taken -> !taken }
                 fork1Taken.value = true

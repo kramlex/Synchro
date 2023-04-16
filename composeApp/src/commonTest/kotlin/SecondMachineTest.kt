@@ -8,7 +8,6 @@ import ru.nsu.synchro.app.machine.ast.ForeignFunctionNode
 import ru.nsu.synchro.app.machine.dsl.program
 import ru.nsu.synchro.app.machine.runtime.ProgramEnvironment
 import ru.nsu.synchro.app.machine.runtime.executeProgram
-import kotlin.native.concurrent.ThreadLocal
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
@@ -19,9 +18,11 @@ internal class Phil(
 
     val leftForkTaken = MutableStateFlow(false)
     val rightForkTaken = MutableStateFlow(false)
+
+    val isEaten = MutableStateFlow(false)
 }
 
-@ThreadLocal
+@Suppress("NonAsciiCharacters", "ClassName")
 object `Среда философов` : ProgramEnvironment {
 
     private val phils: List<Phil> = listOf(
@@ -37,6 +38,7 @@ object `Среда философов` : ProgramEnvironment {
         "Сзади свободно 1" -> phils[0].currentPosition.value > 0
         "Впереди свободно 2" -> phils[1].currentPosition.value < phils[1].maxPosition
         "Сзади свободно 2" -> phils[1].currentPosition.value > 0
+        "Оба поели" -> phils[0].isEaten.value && phils[1].isEaten.value
         else -> null
     }
 
@@ -46,6 +48,9 @@ object `Среда философов` : ProgramEnvironment {
             "Шаг назад 1" -> phils[0].currentPosition.update { it.dec() }
             "Шаг вперёд 2" -> phils[1].currentPosition.update { it.inc() }
             "Шаг назад 2" -> phils[1].currentPosition.update { it.dec() }
+
+            "Поел 1" -> phils[0].isEaten.update { true }
+            "Поел 2" -> phils[1].isEaten.update { true }
 
             "Взять левую вилку 1" -> with(semaphore1) {
                 acquire()
@@ -105,6 +110,7 @@ private val program = program(name = "Столовая") {
             }
             "Еда 1"()
             delay(10.seconds)
+            "Поел 1"()
         }
 
         parallel {
@@ -132,6 +138,7 @@ private val program = program(name = "Столовая") {
             }
             "Еда 2"()
             delay(10.seconds)
+            "Поел 2"()
         }
 
         parallel {
@@ -144,9 +151,10 @@ private val program = program(name = "Столовая") {
             }
         }
     }
-}.returns(
-    string = "Оба поели"
-)
+}.returnsText("Оба поели") {
+    then = "Оба философа поели"
+    otherwise = "Кто-то не поел"
+}
 
 class SecondMachineTest {
 

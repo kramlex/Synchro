@@ -1,7 +1,7 @@
 package ru.nsu.synchro.app.machine.runtime
 
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import ru.nsu.synchro.app.machine.ast.ParallelNode
 
 suspend fun executeParallel(
@@ -10,8 +10,8 @@ suspend fun executeParallel(
 ) {
     runtime.debugger.println(node.name ?: "Anonymous parallel")
 
-    node.expressions.map { expression ->
-        runtime.scope.async {
+    coroutineScope {
+        for (expression in node.expressions) launch {
             executeExpression(
                 node = expression,
                 runtime = runtime.copy(
@@ -26,5 +26,5 @@ suspend fun executeParallel(
                 )
             )
         }
-    }.awaitAll()
+    }
 }

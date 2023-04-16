@@ -1,5 +1,8 @@
 package ru.nsu.synchro.app.machine.runtime
 
+import kotlinx.coroutines.delay
+import ru.nsu.synchro.app.machine.ast.EnvNode
+import ru.nsu.synchro.app.machine.ast.ExpressionType
 import ru.nsu.synchro.app.machine.dsl.ParallelProgram
 
 suspend fun executeProgram(
@@ -14,5 +17,18 @@ suspend fun executeProgram(
         runtime = Runtime(environment, debugger)
     )
 
-    println(program.returns ?: return)
+    delay(200)
+    val returnedValue = program.returnedValue ?: return
+
+    val conditionNode = EnvNode(returnedValue.conditionName, ExpressionType.Boolean)
+    val returnedConditionValue = environment.provideEnvVariable(conditionNode)
+    println(conditionNode)
+    println(returnedConditionValue)
+    if (returnedConditionValue == true) {
+        println(returnedValue.then)
+    } else {
+        println(returnedValue.otherwise)
+    }
+    println(program.returnedValue ?: return)
+//    println(program.returns ?: return)
 }
