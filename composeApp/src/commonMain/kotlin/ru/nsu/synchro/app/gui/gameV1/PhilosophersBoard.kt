@@ -42,11 +42,11 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-enum class Position {
+private enum class Position {
     LEFT, TOP, RIGHT, BOTTOM
 }
 
-data class Cell(
+private data class Cell(
     val index: Int,
     val position: Position,
     val center: Offset,
@@ -414,7 +414,7 @@ fun PhilosophersBoard(
     }
 }
 
-fun List<Philosopher>.calculateCells(
+private fun List<Philosopher>.calculateCells(
     size: Size,
     center: Offset,
     tableRadiusPercent: Float,

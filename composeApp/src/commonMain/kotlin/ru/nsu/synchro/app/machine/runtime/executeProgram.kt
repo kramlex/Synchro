@@ -13,9 +13,10 @@ class ExecutableProgram(
     private val environment: ProgramEnvironment,
     private val program: ParallelProgram,
     private val debug: Boolean,
-    runningThreads: MutableMap<String, MutableStateFlow<Boolean>>? = null
+    runningThreads: MutableMap<String, MutableStateFlow<Boolean>>? = null,
+    stackTrace: MutableStateFlow<List<String>>? = null
 ) {
-    val debugger = Debugger(enabled = debug)
+    val debugger = Debugger(enabled = debug, stackTrace = stackTrace)
 
     val runningThreads: MutableMap<String, MutableStateFlow<Boolean>>
 
@@ -41,8 +42,17 @@ class ExecutableProgram(
         }
     }
 
+    fun startThread(threads: List<String>) {
+        runningThreads.entries.mapNotNull {
+            if (threads.contains(it.key)) {
+                it
+            } else {
+                null
+            }
+        }.forEach { it.value.update { true } }
+    }
+
     suspend fun startExecution() {
-        val debugger = Debugger(enabled = debug)
         coroutineScope {
             for (expression in program.expressions) launch {
                 val name = (expression as? ControlFlowNode)?.name.orEmpty()

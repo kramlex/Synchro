@@ -1,0 +1,54 @@
+@file:Suppress("NewApi")
+
+package org.jetbrains.codeviewer.platform
+
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.runBlocking
+import org.jetbrains.codeviewer.util.EmptyTextLines
+import org.jetbrains.codeviewer.util.TextLines
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.resource
+
+class VirtualFile(
+    override val name: String,
+    override val isDirectory: Boolean,
+    val textLines: TextLines,
+    override val children: List<File> = listOf(),
+    override val fullPath: String
+) : File {
+
+
+    override val hasChildren: Boolean
+        get() = children.size > 0
+
+    override fun readLines(scope: CoroutineScope): TextLines = textLines
+}
+
+fun ByteArray.toTextLines(): TextLines = object : TextLines {
+    val contents = decodeToString().split("\n")
+
+    override val size: Int
+        get() = contents.size
+
+    override fun get(index: Int): String = contents[index]
+}
+
+
+@OptIn(ExperimentalResourceApi::class)
+actual val HomeFolder: File
+    get() = VirtualFile(
+        "files",
+        isDirectory = true,
+        textLines = EmptyTextLines,
+        children = listOf(
+            VirtualFile(
+                name = "EditorView.kt",
+                isDirectory = false,
+                textLines = runBlocking {
+                    resource("EditorView.kt").readBytes()
+                }.toTextLines(),
+                fullPath = ""
+            )
+        ),
+        fullPath = ""
+    )

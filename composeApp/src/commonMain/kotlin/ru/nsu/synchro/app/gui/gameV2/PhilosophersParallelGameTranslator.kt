@@ -105,8 +105,10 @@ object PhilosophersParallelGameTranslator {
             val flows = set.flows
 
             return program(set.name.orEmpty()) {
+
                 flows.forEach { astFlow ->
                     val threadName = astFlow.name
+
                     synchronous(threadName) {
                         astFlow.actions.forEach { astAction ->
                             translateAction(

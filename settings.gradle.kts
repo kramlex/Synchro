@@ -8,6 +8,14 @@ pluginManagement {
         google()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
+
+    plugins {
+        val agpVersion = extra["agp.version"] as String
+
+        id("com.android.base").version(agpVersion)
+        id("com.android.application").version(agpVersion)
+        id("com.android.library").version(agpVersion)
+    }
 }
 
 dependencyResolutionManagement {
@@ -26,5 +34,6 @@ include(":utils")
 include(":multi-java")
 include(":SynchroGame")
 include(":composeApp")
+include(":code-viewer")
 
 rootProject.name = "Synchro"

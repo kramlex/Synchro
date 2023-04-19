@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
     :path: "../msecd"
 
 SPEC CHECKSUMS:
-  composeApp: 58bd6f8f856dcad1272cc36602ad7e4bf7bb4cfd
+  composeApp: d621f720cf2a3933d54f3ec3ced3d052e69a4300
   SwiftUtils: 765584673f32ffa4271d1066ba64cbb1b233c913
 
 PODFILE CHECKSUM: 9b0c58c617b23ccb3b028b0c81747258f6f5cb78

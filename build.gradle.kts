@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.libres).apply(false)
     alias(libs.plugins.buildConfig).apply(false)
     alias(libs.plugins.kotlinx.serialization).apply(false)
+    id("com.android.application") apply false
+    id("com.android.library") apply false
 }
 
 buildscript {

@@ -48,6 +48,7 @@ kotlin {
                 // projects
                 implementation(projects.multi)
                 implementation(projects.utils)
+                implementation(projects.codeViewer)
             }
         }
 

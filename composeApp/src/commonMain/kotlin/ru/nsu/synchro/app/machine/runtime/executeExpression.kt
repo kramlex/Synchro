@@ -1,5 +1,6 @@
 package ru.nsu.synchro.app.machine.runtime
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import ru.nsu.synchro.app.machine.ast.DelayNode
 import ru.nsu.synchro.app.machine.ast.EnvNode
@@ -18,10 +19,16 @@ suspend fun executeExpression(
     runtime.isRunning.first { isRunning -> isRunning }
     return when (node) {
         is EnvNode -> executeEnv(node, runtime)
-        is ForeignFunctionNode -> executeForeignFunction(node, runtime)
+        is ForeignFunctionNode -> {
+            executeForeignFunction(node, runtime)
+            delay(1000L)
+        }
         is ParallelNode -> executeParallel(node, runtime)
         is SynchronousNode -> executeSynchronous(node, runtime)
-        is DelayNode -> executeDelay(node, runtime)
+        is DelayNode -> {
+            delay(1000L)
+            executeDelay(node, runtime)
+        }
         is RepeatNode -> executeRepeat(node, runtime)
         is WhileNode -> executeWhile(node, runtime)
     }
